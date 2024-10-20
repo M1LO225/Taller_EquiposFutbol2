@@ -1,4 +1,7 @@
-using Microsoft.AspNetCore.Authentication.Negotiate;
+﻿using Microsoft.AspNetCore.Authentication.Negotiate;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Taller_EquiposFutbol2.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,8 @@ builder.Services.AddAuthorization(options =>
     options.FallbackPolicy = options.DefaultPolicy;
 });
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<Taller_EquiposFutbol2Context>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Taller_EquiposFutbol2Context") ?? throw new InvalidOperationException("Connection string 'Taller_EquiposFutbol2Context' not found.")));
 
 var app = builder.Build();
 
